@@ -41,7 +41,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>ru.vgoudk.webservice.Step_1_4__7</mainClass>
+                            <mainClass>ru.vgoudk.webservice.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

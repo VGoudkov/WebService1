@@ -17,18 +17,20 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        SimplePageServlet pageServlet = new SimplePageServlet();
         MirrorServlet mirrorServlet = new MirrorServlet();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(mirrorServlet), "/*");
+        context.addServlet(new ServletHolder(mirrorServlet), "/mirror/*");
+        context.addServlet(new ServletHolder(pageServlet), "/*");
 
         Server server = new Server(8080);
         server.setHandler(context);
 
         server.start();
+        System.out.println("Server started");
         server.join();
 
-        System.out.println("Server started");
     }
 
 }
