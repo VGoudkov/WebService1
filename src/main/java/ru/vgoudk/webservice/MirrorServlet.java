@@ -41,28 +41,31 @@ public class MirrorServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        resp.setContentType(PageGenerator.CONTENT_TYPE);
 
-        String message = req.getParameter( PageGenerator.MESSAGE_FIELD);
-        if ( message == null || message.isEmpty()){
-            resp.setStatus( HttpServletResponse.SC_FORBIDDEN);
-        }
-        else{
-            resp.setStatus( HttpServletResponse.SC_OK);
-        }
+        doBody(req, resp);
+
+    }
+
+    protected void doBody(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType(PageGenerator.CONTENT_TYPE);
         
+        String message = req.getParameter(PageGenerator.MESSAGE_FIELD);
+        if (message == null || message.isEmpty()) {
+            resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        } else {
+            resp.setStatus(HttpServletResponse.SC_OK);
+        }
+
         Map<String, Object> paraMap = getFreemakerParametersMap(req);
-        paraMap.put( PageGenerator.MESSAGE_FIELD, message == null ? "" : message);
+        paraMap.put(PageGenerator.MESSAGE_FIELD, message == null ? "" : message);
+
         
-        //resp.getWriter().println(getTypedParametersMap(req));
         resp.getWriter().println(PageGenerator.getInstance().getPage("page.html", paraMap));
-        
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp); //To change body of generated methods, choose Tools | Templates.
+        doBody(req, resp);
     }
 
     protected Map<PageVariablesType, String> getTypedParametersMap(HttpServletRequest req) {
